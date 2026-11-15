@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CLPS Lunar Mission Browser | SoloHorizon Tech</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=3">
+  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">SH</div>
+      <div>
+        <div class="brand-name">SoloHorizon Tech</div>
+        <div class="brand-sub">Islamabad Local Event</div>
+      </div>
+    </div>
+    <div class="badge">2026 NASA Space Apps Challenge</div>
+  </header>
+
+  <main class="container">
+
+    <section class="hero">
+      <p class="eyebrow">Challenge: CLPS Lunar Mission Browser</p>
+      <h1>Where and when should a lander touch down on the Moon?</h1>
+      <p class="lead">
+        Pick landing sites and dates. We show which site is best, the best days to land,
+        and what the Sun and Earth look like from the Moon's south pole region.
+      </p>
+    </section>
+
+    <section class="panel controls">
+      <div class="field grow">
+        <span class="label">1. Choose landing sites <em>(up to 5)</em></span>
+        <div id="sites" class="chips"></div>
+      </div>
+      <div class="field">
+        <label class="label" for="start">2. Start date</label>
+        <input type="date" id="start" value="2027-01-01" min="2027-01-01" max="2027-12-30">
+      </div>
+      <div class="field">
+        <label class="label" for="end">End date</label>
+        <input type="date" id="end" value="2027-02-01" min="2027-01-02" max="2027-12-31">
+      </div>
+      <button id="go" class="btn">Update results</button>
+    </section>
+
+    <section id="reco"></section>
+
+    <section class="panel">
+      <h2>South pole map (top view)</h2>
+      <p class="muted">
+        You are looking straight down at the Moon's south pole. Rings show latitude and distances are in kilometers.
+        The yellow dot shows the direction of the Sun and the blue dot the direction of Earth at the time chosen on the 3D slider below.
+        Site positions are region centers from NASA LROC tables, not exact landing points.
+      </p>
+      <div id="polarmap" class="chart" style="height:560px"></div>
+    </section>
+
+    <section class="panel">
+      <h2>3D Moon view</h2>
+      <p class="muted">Drag to rotate, scroll to zoom. The bright side faces the Sun. Sun and Earth are not drawn to scale. Use the "Zoom" buttons to fly close to a site.</p>
+      <div class="stage">
+        <div id="moon3d"></div>
+        <div id="hud" class="hud"></div>
+        <div class="legend3d">
+          <span><i style="background:#ffb300"></i>Sun</span>
+          <span><i style="background:#2f80ed"></i>Earth</span>
+          <span><i style="background:#1e9e5a"></i>Recommended site</span>
+          <span><i style="background:#9aa4b8"></i>Other sites</span>
+        </div>
+      </div>
+      <div class="slider">
+        <button id="play" class="btn btn-ghost" type="button">Play</button>
+        <input type="range" id="timeSlider" min="0" max="0" value="0">
+        <span id="timeLabel" class="time"></span>
+      </div>
+      <div class="view-buttons">
+        <button id="jumpBest" class="btn btn-small" type="button">Jump to best moment</button>
+        <button id="viewPole" class="btn btn-ghost btn-small" type="button">South pole view</button>
+        <button id="viewWhole" class="btn btn-ghost btn-small" type="button">Whole Moon view</button>
+      </div>
+      <div id="status" class="status"></div>
+    </section>
+
+    <section class="panel">
+      <h2>Timeline: when is it good to land?</h2>
+      <p class="muted">
+        Solid line = Sun elevation, dotted line = Earth elevation. Above the gray dashed line (0 deg) the object is visible.
+        <b style="color:#1e9e5a">Green zones</b> are the good times for the recommended site: Sun and Earth visible together.
+        The black vertical line follows the 3D slider.
+      </p>
+      <div id="timeline" class="chart"></div>
+    </section>
+
+    <details class="panel" id="domeBox">
+      <summary>Advanced: sky dome (for engineers)</summary>
+      <p class="muted">Center is straight overhead, the edge is the horizon. Each dot is one hour when the object is above the horizon.</p>
+      <div id="skydome" class="chart"></div>
+    </details>
+
+  </main>
+
+  <footer class="footer">
+    <div><b>SoloHorizon Tech</b> &middot; Islamabad Local Event &middot; 2026 NASA Space Apps Challenge</div>
+    <div class="muted">Sun and Earth positions: Skyfield with the NASA JPL DE421 ephemeris. Moon surface: NASA/Goddard SVS CGI Moon Kit (LRO LROC) when available. Site coordinates: NASA LROC region centers. Flat horizon assumed (no terrain shadowing).</div>
+    <div class="muted">Build v3</div>
+  </footer>
+
+  <script src="app.js?v=3"></script>
+  <script src="bodies.js?v=4"></script>
+</body>
+</html>
