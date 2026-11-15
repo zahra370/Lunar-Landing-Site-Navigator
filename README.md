@@ -1,5 +1,7 @@
 # CLPS Lunar Mission Browser
 
+**Demo video:** [demo.mp4](demo.mp4)
+
 **Team SoloHorizon Tech** (Islamabad local event), 2026 NASA Space Apps Challenge.
 
 A web app that helps mission planners, educators and the public compare Moon south pole landing sites and dates by **Sun** (solar power) and **Earth** (direct-to-Earth communication) visibility.
